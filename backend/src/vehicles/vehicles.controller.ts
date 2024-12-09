@@ -10,9 +10,17 @@ export class VehiclesController {
   findAll(
     @Query('manufacturer') manufacturer?: string,
     @Query('type') type?: VehicleType,
-    @Query('year') year?: number,
+    @Query('year') year?: string,
+    @Query('sort') sort?: 'year' | 'price',
+    @Query('page') page?: string,
   ) {
-    return this.vehiclesService.findAll(manufacturer, type, +year);
+    return this.vehiclesService.findAll(
+      manufacturer,
+      type,
+      !!year ? +year : undefined,
+      sort,
+      page,
+    );
   }
 
   @Get(':id')
