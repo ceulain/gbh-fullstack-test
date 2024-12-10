@@ -11,8 +11,6 @@ export const fetchVehicles = async (searchParams = {}) => {
 };
 
 export const fetchFilters = async () => {
-  await new Promise((resolve) => setTimeout(resolve, 3000));
-
   const res = await fetch("http://localhost:3000/api/filters");
 
   return res.json() as Promise<Filter[]>;
