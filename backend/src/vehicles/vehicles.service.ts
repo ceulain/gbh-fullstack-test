@@ -16,22 +16,49 @@ export class VehiclesService {
     sort?: Sort,
     page?: string,
   ) {
+    const pagination = {
+      take: ITEM_PER_PAGE,
+      skip: ((+page || 1) - 1) * ITEM_PER_PAGE,
+    };
+
     if (manufacturer || type || year) {
       const where = {
         AND: [{ manufacturer }, { type }, { year }],
       };
-
-      return await this.databaseService.vehicle.findMany({
+      const vehicles = await this.databaseService.vehicle.findMany({
         ...getOrderBy(sort),
+        ...pagination,
         where,
       });
+
+      return {
+        vehicles,
+        meta: {
+          total: await this.databaseService.vehicle.count({ where }),
+          page: +page || 1,
+          lastPage: Math.ceil(
+            (await this.databaseService.vehicle.count({ where })) /
+              ITEM_PER_PAGE,
+          ),
+        },
+      };
     }
 
-    return await this.databaseService.vehicle.findMany({
-      take: ITEM_PER_PAGE,
-      skip: ((+page || 1) - 1) * ITEM_PER_PAGE,
+    const vehicles = await this.databaseService.vehicle.findMany({
+      ...pagination,
       ...getOrderBy(sort),
     });
+
+    return {
+      vehicles,
+      meta: {
+        total: await this.databaseService.vehicle.count(),
+        page: +page || 1,
+        lastPage: Math.ceil(
+          (await this.databaseService.vehicle.count()) / ITEM_PER_PAGE,
+        ),
+      },
+    };
   }
 
   async findOne(id: number) {
