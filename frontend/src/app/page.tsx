@@ -7,8 +7,6 @@ import { Suspense } from "react";
 import FilterSkeleton from "./components/filter/skeleton";
 import CardSkeleton from "./components/content/vehicle/skeleton";
 
-{
-}
 const TOTAL_PAGE = 20;
 const TOTAL__ITEM_PER_PAGE = 4;
 
