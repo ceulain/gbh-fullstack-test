@@ -23,6 +23,7 @@ const Content = async ({ searchParams }: SearchParams) => {
             key={id}
             id={id}
             description={vehicle.description}
+            price={vehicle.price}
             name={name}
           />
         );

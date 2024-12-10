@@ -2,20 +2,17 @@
 
 import { Card, CardContent, CardMedia, Typography } from "@mui/material";
 import Image from "next/image";
-
 import { useRouter } from "next/navigation";
 
-const Vehicle = ({
-  id,
-  name,
-  description,
-  index,
-}: {
+type Props = {
+  description: string;
   id: string;
   index: number;
   name: string;
-  description: string;
-}) => {
+  price: number;
+};
+
+const Vehicle = ({ id, name, description, price, index }: Props) => {
   const router = useRouter();
 
   return (
@@ -39,6 +36,9 @@ const Vehicle = ({
         </Typography>
         <Typography variant="body2" sx={{ color: "text.secondary" }}>
           {description}
+        </Typography>
+        <Typography variant="body2" sx={{ color: "text.secondary" }}>
+          {`${price} €`}
         </Typography>
       </CardContent>
     </Card>
