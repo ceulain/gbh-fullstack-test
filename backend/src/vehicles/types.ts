@@ -32,6 +32,8 @@ export enum FuelType {
   PLUGIN_HYBRID = 'PLUGIN_HYBRID',
 }
 
-export const filters = ['manufacturer', 'type', 'year'] as const;
+export type Sort = 'price' | 'year';
 
-export type FilterType = (typeof filters)[number];
+export type OrderBy = {
+  orderBy?: Record<string, 'desc'>[];
+};

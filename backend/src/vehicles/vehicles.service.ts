@@ -1,6 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { DatabaseService } from 'src/database/database.service';
 import { VehicleType } from '@prisma/client';
+import { getOrderBy } from './utils';
+import { Sort } from './types';
+import { ITEM_PER_PAGE } from './constants';
 
 @Injectable()
 export class VehiclesService {
@@ -9,49 +12,35 @@ export class VehiclesService {
   async findAll(
     manufacturer?: string,
     type?: VehicleType,
-    year = undefined,
-    sort?: 'price' | 'year',
+    year?: number,
+    sort?: Sort,
     page?: string,
   ) {
-    let sorting;
-
-    if (sort === 'price') {
-      sorting = {
-        orderBy: [
-          {
-            price: 'desc',
-          },
-        ],
-      };
-    } else if (sort === 'year') {
-      sorting = {
-        orderBy: [
-          {
-            year: 'desc',
-          },
-        ],
-      };
-    } else {
-      sorting = {};
-    }
     if (manufacturer || type || year) {
       const where = {
         AND: [{ manufacturer }, { type }, { year }],
       };
+
       return this.databaseService.vehicle.findMany({
-        ...sorting,
+        ...getOrderBy(sort),
         where,
       });
     }
 
     return this.databaseService.vehicle.findMany({
-      take: 4,
-      skip: ((Number(page) || 1) - 1) * 4,
-      ...sorting,
+      take: ITEM_PER_PAGE,
+      skip: ((+page || 1) - 1) * ITEM_PER_PAGE,
+      ...getOrderBy(sort),
     });
   }
 
   findOne(id: number) {
-    return this.databaseService.vehicle.findUnique({ where: { id } });
+    const vehicle = this.databaseService.vehicle.findUnique({ where: { id } });
+
+    if (!vehicle) {
+      throw new NotFoundException('Vehicle not found');
+    }
+
+    return vehicle;
   }
 }
