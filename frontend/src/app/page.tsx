@@ -34,7 +34,6 @@ export default async function Home({ searchParams }: SearchParams) {
           {/* @ts-expect-error Server Component */}
           <Content searchParams={searchParams} />
         </Suspense>
-
         <Pagination total={TOTAL_PAGE / TOTAL__ITEM_PER_PAGE} />
       </div>
     </main>

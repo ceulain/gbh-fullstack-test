@@ -1,7 +1,7 @@
 import { Box, Skeleton } from "@mui/material";
 
 const Rectangular = () => (
-  <Skeleton variant="rectangular" width={132} height={42} />
+  <Skeleton variant="rectangular" width={134} height={42} />
 );
 
 const FilterSkeleton = () => (
