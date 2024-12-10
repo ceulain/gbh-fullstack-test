@@ -2,13 +2,9 @@ import Filter from "./components/filter";
 import Sort from "./components/sort";
 import Content from "./components/content";
 import styles from "./page.module.css";
-import Pagination from "./components/pagination";
 import { Suspense } from "react";
 import FilterSkeleton from "./components/filter/skeleton";
 import CardSkeleton from "./components/content/vehicle/skeleton";
-
-const TOTAL_PAGE = 20;
-const TOTAL__ITEM_PER_PAGE = 4;
 
 export type SearchParams = {
   searchParams: Promise<{
@@ -32,7 +28,6 @@ export default async function Home({ searchParams }: SearchParams) {
           {/* @ts-expect-error Server Component */}
           <Content searchParams={searchParams} />
         </Suspense>
-        <Pagination total={TOTAL_PAGE / TOTAL__ITEM_PER_PAGE} />
       </div>
     </main>
   );

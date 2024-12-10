@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { Vehicle } from "../components/content/vehicle/types";
 import { Filter } from "../components/filter/types";
+import { Response } from "./types";
 
 export const fetchVehicles = async (searchParams = {}) => {
   const params = new URLSearchParams(searchParams);
@@ -12,8 +13,7 @@ export const fetchVehicles = async (searchParams = {}) => {
     notFound();
   }
 
-  const vehicles = res.json() as Promise<Vehicle[]>;
-  return vehicles;
+  return res.json() as Promise<Response>;
 };
 
 export const fetchFilters = async () => {

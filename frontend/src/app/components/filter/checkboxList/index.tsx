@@ -21,7 +21,9 @@ const CheckboxList = ({ name, filter, type }: Props) => {
   const params = new URLSearchParams(searchParams);
 
   const handleChange = (value: string, type: string) => {
-    if (params.get(type) === value) {
+    params.delete("page");
+
+    if (params.get(type) === String(value)) {
       params.delete(type, value);
     } else {
       params.set(type, value);
