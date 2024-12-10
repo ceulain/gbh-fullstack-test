@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { DatabaseService } from 'src/database/database.service';
+import { formatFilter } from './utils';
 
 @Injectable()
 export class FiltersService {
@@ -14,28 +15,22 @@ export class FiltersService {
     const types = [...new Set((await vehicles).map((vehicle) => vehicle.type))];
     const years = [...new Set((await vehicles).map((vehicle) => vehicle.year))];
 
-    const format = (value) => ({ value });
-
     return [
       {
         name: 'Marques',
         type: 'manufacturer',
-        filter: manufacturers.map(format),
+        filter: manufacturers.map(formatFilter),
       },
       {
         name: 'Années',
         type: 'year',
-        filter: years.map(format),
+        filter: years.map(formatFilter),
       },
       {
         name: 'Types',
         type: 'type',
-        filter: types.map(format),
+        filter: types.map(formatFilter),
       },
     ];
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} filter`;
   }
 }
