@@ -21,21 +21,23 @@ export class VehiclesService {
         AND: [{ manufacturer }, { type }, { year }],
       };
 
-      return this.databaseService.vehicle.findMany({
+      return await this.databaseService.vehicle.findMany({
         ...getOrderBy(sort),
         where,
       });
     }
 
-    return this.databaseService.vehicle.findMany({
+    return await this.databaseService.vehicle.findMany({
       take: ITEM_PER_PAGE,
       skip: ((+page || 1) - 1) * ITEM_PER_PAGE,
       ...getOrderBy(sort),
     });
   }
 
-  findOne(id: number) {
-    const vehicle = this.databaseService.vehicle.findUnique({ where: { id } });
+  async findOne(id: number) {
+    const vehicle = await this.databaseService.vehicle.findUnique({
+      where: { id },
+    });
 
     if (!vehicle) {
       throw new NotFoundException('Vehicle not found');

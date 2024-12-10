@@ -7,7 +7,7 @@ export class FiltersService {
   constructor(private readonly databaseService: DatabaseService) {}
 
   async findAll() {
-    const vehicles = this.databaseService.vehicle.findMany();
+    const vehicles = await this.databaseService.vehicle.findMany();
 
     const manufacturers = [
       ...new Set((await vehicles).map((vehicle) => vehicle.manufacturer)),
