@@ -1,5 +1,9 @@
+"use client";
+
 import { Card, CardContent, CardMedia, Typography } from "@mui/material";
 import Image from "next/image";
+
+import { useRouter } from "next/navigation";
 
 const Vehicle = ({
   id,
@@ -12,15 +16,21 @@ const Vehicle = ({
   name: string;
   description: string;
 }) => {
+  const router = useRouter();
+
   return (
-    <Card key={id} sx={{ maxWidth: "600px" }}>
+    <Card
+      key={id}
+      sx={{ maxWidth: "600px", cursor: "pointer" }}
+      onClick={() => router.push(`/vehicle/${id}`)}
+    >
       <CardMedia>
         <Image
           priority={index === 0}
           src="/images/car-placeholder.svg"
           width={600}
           height={400}
-          alt={`${name} iamge`}
+          alt={`${name} image`}
         ></Image>
       </CardMedia>
       <CardContent>
