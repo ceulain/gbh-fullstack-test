@@ -15,7 +15,7 @@ type Props = {
   type: string;
 };
 
-const Form = ({ name, filter, type }: Props) => {
+const CheckboxList = ({ name, filter, type }: Props) => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const params = new URLSearchParams(searchParams);
@@ -35,10 +35,11 @@ const Form = ({ name, filter, type }: Props) => {
       <FormLabel component="h3">{name}</FormLabel>
       <FormGroup>
         {filter.map(({ value }) => {
-          //   const isChecked = params.get(type) === String(value);
+          const isChecked = params.get(type) === String(value);
 
           return (
             <FormControlLabel
+              checked={isChecked}
               key={value}
               control={
                 <Checkbox
@@ -55,4 +56,4 @@ const Form = ({ name, filter, type }: Props) => {
   );
 };
 
-export default Form;
+export default CheckboxList;
